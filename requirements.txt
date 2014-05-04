@@ -2,3 +2,4 @@ Django==1.6.4
 PyVirtualDisplay==0.1.5
 sauceclient==0.1.0
 travis==0.0.1
+selenium

@@ -1,4 +1,5 @@
-mport os
+
+import os
 import sys
 
 from selenium import webdriver
@@ -33,7 +34,7 @@ def on_platforms(platforms):
 
 
 @on_platforms(browsers)
-class SaucheTest(LiveServerTestCase):
+class HelloSauceTest(LiveServerTestCase):
     """
     Runs a test using travis-ci and saucelabs
     """
