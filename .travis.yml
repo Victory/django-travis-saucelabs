@@ -1,0 +1,18 @@
+language: python
+
+python:
+  - 2.7
+
+install: "pip install -r requirements.txt"
+
+before_install:
+  - echo "some cool scripts"
+
+addons:
+  sauce_connect:
+    username: "Victory"
+    access_key:
+        secure: "RsgEN1KA3v7qc+yiVgNDSp0CyJ75gydlQCNjunwU76M+J9MrbLcwKa2ywHSY7tw8a93LUA39ROdcAzUsELi33I+Xo/dpTu2Wh/b7B6y53BK1pQQZIiRtsP6Ybc4SoEI1SF9FE0NeZWZ7vk2zD1E47bRzfxOkNV7n3Ah3mNGKXBU="
+
+script: 
+  - python mysite/manage.py test saucetests
