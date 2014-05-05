@@ -1,4 +1,3 @@
-
 import os
 import sys
 
@@ -7,6 +6,22 @@ from django.test import LiveServerTestCase
 
 from sauceclient import SauceClient
 
+
+def setupLocal():
+    try:
+        fh = open(
+            os.path.dirname(os.path.realpath(__file__)) + '/sauce-key.txt')
+        ln = fh.read().strip()
+        bits =  ln.split(":")
+        username = bits[0]
+        key = bits[1]
+        os.environ.setdefault('SAUCE_USERNAME', username)
+        os.environ.setdefault('SAUCE_ACCESS_KEY', key)
+    except:
+        if not os.environ.get('SAUCE_USERNAME'):
+            print "Warning Sauce Username Not Found"
+        if not os.environ.get('SAUCE_ACCESS_KEY'):
+            print "Warning Sauce Key Not Found"
 
 USERNAME = os.environ.get('SAUCE_USERNAME')
 ACCESS_KEY = os.environ.get('SAUCE_ACCESS_KEY')
