@@ -1,6 +1,11 @@
 django-travis-saucelabs
 =======================
 
+[![Build Status](https://travis-ci.org/Victory/django-travis-saucelabs.svg?branch=master)](https://travis-ci.org/Victory/django-travis-saucelabs)
+
+[![Selenium Test Status](https://saucelabs.com/browser-matrix/Victory.svg)](https://saucelabs.com/u/Victory)
+
+
 An Instructive Repo for using Django, Travis and Saucelabs together.
 
 We will assume you have `virtualenv` installed
