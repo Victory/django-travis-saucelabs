@@ -48,7 +48,7 @@ def on_platforms(platforms):
     return decorator
 
 
-#@on_platforms(browsers)
+@on_platforms(browsers)
 class HelloSauceTest(LiveServerTestCase):
     """
     Runs a test using travis-ci and saucelabs
