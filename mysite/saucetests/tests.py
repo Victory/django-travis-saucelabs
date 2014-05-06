@@ -48,14 +48,14 @@ def on_platforms(platforms):
     return decorator
 
 
-@on_platforms(browsers)
+#@on_platforms(browsers)
 class HelloSauceTest(LiveServerTestCase):
     """
     Runs a test using travis-ci and saucelabs
     """
 
     def setUp(self):
-        self.caps = {}
+        self.desired_capabilities = {}
         self.desired_capabilities['name'] = self.id()
         self.desired_capabilities['tunnel-identifier'] = \
             os.environ['TRAVIS_JOB_NUMBER']
@@ -70,7 +70,7 @@ class HelloSauceTest(LiveServerTestCase):
             desired_capabilities=self.desired_capabilities,
             command_executor=sauce_url % (USERNAME, ACCESS_KEY)
         )
-        self.driver.implicitly_wait(30)
+        self.driver.implicitly_wait(5)
 
     def tearDown(self):
         print("\nLink to your job: \n "
@@ -84,5 +84,5 @@ class HelloSauceTest(LiveServerTestCase):
             self.driver.quit()
 
     def test_sauce(self):
-        self.driver.get(self.live_server_url + "/")
-        assert "Welcome to Django" in self.driver.title
+        self.driver.get(self.live_server_url + '/admin')
+        assert "Log in" in self.driver.title
