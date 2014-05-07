@@ -9,7 +9,8 @@ print RUN_LOCAL
 
 
 if RUN_LOCAL:
-    browsers = ['Firefox'] # could add Chrome, PhantomJS etc... here
+    # could add Chrome, PhantomJS etc... here
+    browsers = ['Firefox']
 else:
     from sauceclient import SauceClient
     USERNAME = os.environ.get('SAUCE_USERNAME')
@@ -26,6 +27,7 @@ else:
         {"platform": "Linux",
          "browserName": "firefox",
          "version": "29"}]
+
 
 def on_platforms(platforms, local):
     if local:
@@ -48,6 +50,7 @@ def on_platforms(platforms, local):
             module[name] = type(name, (base_class,), d)
     return decorator
 
+
 @on_platforms(browsers, RUN_LOCAL)
 class HelloSauceTest(LiveServerTestCase):
     """
@@ -58,7 +61,7 @@ class HelloSauceTest(LiveServerTestCase):
         if RUN_LOCAL:
             self.setUpLocal()
         else:
-            self.setUpSauce();
+            self.setUpSauce()
 
     def tearDown(self):
         if RUN_LOCAL:
