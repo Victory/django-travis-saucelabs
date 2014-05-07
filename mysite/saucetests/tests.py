@@ -5,7 +5,6 @@ from selenium import webdriver
 from django.test import LiveServerTestCase
 
 RUN_LOCAL = os.environ.get('RUN_TESTS_LOCAL') == 'True'
-print RUN_LOCAL
 
 
 if RUN_LOCAL:
@@ -67,7 +66,7 @@ class HelloSauceTest(LiveServerTestCase):
         if RUN_LOCAL:
             self.tearDownLocal()
         else:
-            self.tearDownSauce();
+            self.tearDownSauce()
 
     def setUpSauce(self):
         self.desired_capabilities['name'] = self.id()
