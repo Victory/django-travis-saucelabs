@@ -60,3 +60,8 @@ Now update your `.travis.yml`
 Run tests with the following and updated your `travis.yml`
 
     python mysite/manage.py test saucetests
+
+The tests checks that the '/admin' page returns a `200 OK` status
+code. The '/admin' page was choosen in this example because its
+defined when creating a `django` project, using the run server '/' is
+not defined in `urls.py`.

@@ -4,40 +4,41 @@ import sys
 from selenium import webdriver
 from django.test import LiveServerTestCase
 
-from sauceclient import SauceClient
+RUN_LOCAL = os.environ.get('RUN_TESTS_LOCAL') == 'True'
+print RUN_LOCAL
 
 
-def setupLocal():
-    try:
-        fh = open(
-            os.path.dirname(os.path.realpath(__file__)) + '/sauce-key.txt')
-        ln = fh.read().strip()
-        bits =  ln.split(":")
-        username = bits[0]
-        key = bits[1]
-        os.environ.setdefault('SAUCE_USERNAME', username)
-        os.environ.setdefault('SAUCE_ACCESS_KEY', key)
-    except:
-        if not os.environ.get('SAUCE_USERNAME'):
-            print "Warning Sauce Username Not Found"
-        if not os.environ.get('SAUCE_ACCESS_KEY'):
-            print "Warning Sauce Key Not Found"
+if RUN_LOCAL:
+    browsers = ['Firefox'] # could add Chrome, PhantomJS etc... here
+else:
+    from sauceclient import SauceClient
+    USERNAME = os.environ.get('SAUCE_USERNAME')
+    ACCESS_KEY = os.environ.get('SAUCE_ACCESS_KEY')
+    sauce = SauceClient(USERNAME, ACCESS_KEY)
 
-USERNAME = os.environ.get('SAUCE_USERNAME')
-ACCESS_KEY = os.environ.get('SAUCE_ACCESS_KEY')
+    browsers = [
+        {"platform": "Mac OS X 10.9",
+         "browserName": "chrome",
+         "version": ""},
+        {"platform": "Windows 8.1",
+         "browserName": "internet explorer",
+         "version": "11"},
+        {"platform": "Linux",
+         "browserName": "firefox",
+         "version": "29"}]
 
-sauce = SauceClient(USERNAME, ACCESS_KEY)
+def on_platforms(platforms, local):
+    if local:
+        def decorator(base_class):
+            module = sys.modules[base_class.__module__].__dict__
+            for i, platform in enumerate(platforms):
+                d = dict(base_class.__dict__)
+                d['browser'] = platform
+                name = "%s_%s" % (base_class.__name__, i + 1)
+                module[name] = type(name, (base_class,), d)
+            pass
+        return decorator
 
-
-browsers = [{"platform": "Mac OS X 10.9",
-             "browserName": "chrome",
-             "version": ""},
-            {"platform": "Windows 8.1",
-             "browserName": "internet explorer",
-             "version": "11"}]
-
-
-def on_platforms(platforms):
     def decorator(base_class):
         module = sys.modules[base_class.__module__].__dict__
         for i, platform in enumerate(platforms):
@@ -47,14 +48,25 @@ def on_platforms(platforms):
             module[name] = type(name, (base_class,), d)
     return decorator
 
-
-@on_platforms(browsers)
+@on_platforms(browsers, RUN_LOCAL)
 class HelloSauceTest(LiveServerTestCase):
     """
     Runs a test using travis-ci and saucelabs
     """
 
     def setUp(self):
+        if RUN_LOCAL:
+            self.setUpLocal()
+        else:
+            self.setUpSauce();
+
+    def tearDown(self):
+        if RUN_LOCAL:
+            self.tearDownLocal()
+        else:
+            self.tearDownSauce();
+
+    def setUpSauce(self):
         self.desired_capabilities['name'] = self.id()
         self.desired_capabilities['tunnel-identifier'] = \
             os.environ['TRAVIS_JOB_NUMBER']
@@ -71,7 +83,14 @@ class HelloSauceTest(LiveServerTestCase):
         )
         self.driver.implicitly_wait(5)
 
-    def tearDown(self):
+    def setUpLocal(self):
+        self.driver = getattr(webdriver, self.browser)()
+        self.driver.implicitly_wait(3)
+
+    def tearDownLocal(self):
+        self.driver.quit()
+
+    def tearDownSauce(self):
         print("\nLink to your job: \n "
               "https://saucelabs.com/jobs/%s \n" % self.driver.session_id)
         try:
