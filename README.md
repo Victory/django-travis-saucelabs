@@ -3,12 +3,14 @@ django-travis-saucelabs
 
 [![Build Status](https://travis-ci.org/Victory/django-travis-saucelabs.svg?branch=master)](https://travis-ci.org/Victory/django-travis-saucelabs)
 
+This badage links to all of my projects on saucelabs, not just this one.
+
 [![Selenium Test Status](https://saucelabs.com/browser-matrix/Victory.svg)](https://saucelabs.com/u/Victory)
 
 
-An Instructive Repo for using Django, Travis and Saucelabs together.
+An instructive repo for using Django, Travis and Saucelabs together.
 
-We will assume you have `virtualenv` installed
+We will assume you have `virtualenv` installed, run the following:
 
      virtualenv pyenv
      source pyenv/bin/activate
@@ -22,21 +24,19 @@ Make sure everything is working
 
     python mysite/manage.py runserver
 
-Then navigate to `http://127.0.0.1:8000/`
+Then navigate to `http://127.0.0.1:8000/admin`
 
     pip install PyVirtualDisplay
     pip install sauceclient
     pip install travis
 
 This repo keeps a `requirements.txt` you can use `pip freeze` to see
-the versions of modules you are running
-
-So you could run
+the versions of modules you are running so you may run:
 
     pip install -r requirements.txt
 
 Got to https://travis-ci.org/profile and make sure you have this repo
-set to `on`
+set to `on`.
 
 Get your key from saucelabs then run the following replacing `$KEY`
 and repo name (i.e. `your-username/repo-name`). Your `$KEY` from sauce
@@ -59,9 +59,18 @@ Now update your `.travis.yml`
 
 Run tests with the following and updated your `travis.yml`
 
+    script:
+      - python run-tests.py
+
+Or directly with
+
     python mysite/manage.py test saucetests
+
+You can also run tests locally using
+
+   python run-tests.py -l
 
 The tests checks that the '/admin' page returns a `200 OK` status
 code. The '/admin' page was choosen in this example because its
-defined when creating a `django` project, using the run server '/' is
-not defined in `urls.py`.
+defined when creating a `django` project. Using the test server to run
+'/' is not defined as it is not in `urls.py`.
