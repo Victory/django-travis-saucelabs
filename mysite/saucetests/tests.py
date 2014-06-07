@@ -19,7 +19,7 @@ else:
     browsers = [
         {"platform": "Mac OS X 10.9",
          "browserName": "chrome",
-         "version": ""},
+         "version": "35"},
         {"platform": "Windows 8.1",
          "browserName": "internet explorer",
          "version": "11"},
