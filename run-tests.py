@@ -13,5 +13,9 @@ parser.add_argument(
 args = parser.parse_args()
 os.environ['RUN_TESTS_LOCAL'] = str(args.local)
 
+errs = 0
 
 err = call(["python", "mysite/manage.py", "test", "saucetests"])
+errs += err
+
+exit(err)
