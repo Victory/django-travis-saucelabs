@@ -3,8 +3,6 @@ import os
 
 from subprocess import call
 
-from pyvirtualdisplay import Display
-
 parser = argparse.ArgumentParser(
     description='Run Tests locally or on Saucelabs')
 parser.add_argument(
