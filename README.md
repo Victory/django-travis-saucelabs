@@ -8,7 +8,7 @@ This badage links to all of my projects on saucelabs, not just this one.
 [![Selenium Test Status](https://saucelabs.com/browser-matrix/Victory.svg)](https://saucelabs.com/u/Victory)
 
 
-An instructive repo for using Django, Travis and Saucelabs together.
+An demonstrative repo for using Django, Travis and Saucelabs together.
 
 We will assume you have `virtualenv` installed, run the following:
 
@@ -30,8 +30,8 @@ Then navigate to `http://127.0.0.1:8000/admin`
     pip install sauceclient
     pip install travis
 
-This repo keeps a `requirements.txt` you can use `pip freeze` to see
-the versions of modules you are running so you may run:
+This repo keeps a `requirements.txt`. You can use `pip freeze` to see
+the versions of modules you are running. To get the correct versions:
 
     pip install -r requirements.txt
 
