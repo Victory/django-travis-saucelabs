@@ -57,20 +57,22 @@ Now update your `.travis.yml`
          access_key:
              secure: "reallyLongStringWithEncryptedStuff"
 
-Run tests with the following and updated your `travis.yml`
+
+Updated your `travis.yml`.
+
+After, Run tests with the following:
 
     script:
       - python run-tests.py
 
-Or directly with
+Or run directly with
 
     python mysite/manage.py test saucetests
 
-You can also run tests locally using
+You may also run tests locally using
 
     python run-tests.py -l
 
 The tests checks that the `/admin` page returns a `200 OK` status
 code. The `/admin` page was choosen in this example because its
-defined when creating a `django` project. Using the test server to run
-`/` is not defined as it is not in `urls.py`.
+defined when creating a `django` project. Using the test not defined as it is not in `urls.py`.
